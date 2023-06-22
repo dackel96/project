@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import Lottery from './Components/Lottery';
+import Final from './Components/Final';
 
 import './App.css';
 
 import { getRandomNumber } from './Functions/Utils';
-import { registerTicket } from './Functions/actions';
+import {
+  registerTicket,
+  removeTicket,
+  finish,
+  reset,
+} from './Functions/actions';
 
 class App extends Component {
   constructor(props) {
@@ -18,13 +24,30 @@ class App extends Component {
     };
 
     this.registerTicket = registerTicket.bind(this);
+    this.removeTicket = removeTicket.bind(this);
+    this.finish = finish.bind(this);
+    this.reset = reset.bind(this);
   }
 
   renderApp() {
-    const { tickets, remainingTickets } = this.state;
+    const { tickets, remainingTickets, finished, winningNumber } = this.state;
     const actions = {};
 
+    if (finished) {
+      actions.reset = this.reset;
+      return (
+        <Final
+          actions={actions}
+          tickets={tickets}
+          winningNumber={winningNumber}
+        />
+      );
+    }
+
     actions.registerTicket = this.registerTicket;
+    actions.removeTicket = this.removeTicket;
+    actions.finish = this.finish;
+
     return (
       <Lottery
         actions={actions}

@@ -8,14 +8,19 @@ class Lottery extends Component {
     if (remainingTickets > 0) {
       return <button onClick={actions.registerTicket}>Купи Билет</button>;
     }
+
+    return <button onClick={actions.finish}>Провери за Печалба</button>;
   }
 
   renderTickets() {
     const { tickets, actions } = this.props;
 
+    const lotteryTicketActions = { removeTicket: actions.removeTicket };
+
     const lotteryTickets = tickets.map((ticket, index) => {
       return (
         <LotteryTicket
+          actions={lotteryTicketActions}
           color={ticket.color}
           number={ticket.number}
           index={index}
