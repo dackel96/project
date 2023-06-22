@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { getRandomColor } from '../Functions/Utils';
 
+import { Button, Space, Card } from 'antd';
+
 class Final extends Component {
   isWinning() {
     const { tickets, winningNumber } = this.props;
@@ -40,10 +42,12 @@ class Final extends Component {
 
   render() {
     return (
-      <div style={{ backgroundColor: getRandomColor(), padding: 15 }}>
-        {this.isWinning() ? this.renderWinning() : this.renderTryAgain()}
-        <button onClick={this.props.actions.reset}>Ново Теглене</button>
-      </div>
+      <Card
+        style={{ backgroundColor: getRandomColor() }}
+        title={this.isWinning() ? this.renderWinning() : this.renderTryAgain()}
+      >
+        <Button onClick={this.props.actions.reset}>Ново Теглене</Button>
+      </Card>
     );
   }
 }
