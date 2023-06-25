@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
-import Lottery from './Components/Lottery';
-import Final from './Components/Final';
-
+import { Layout } from 'antd';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
+
+import Lottery from './Components/Lottery';
+import AppHeader from './Components/AppHeader';
+import Final from './Components/Final';
+import AppFooter from './Components/AppFooter';
+import AboutUs from './Components/AboutUs';
 
 import { getRandomNumber } from './Functions/Utils';
 import {
@@ -11,6 +16,8 @@ import {
   finish,
   reset,
 } from './Functions/actions';
+
+const { Content } = Layout;
 
 class App extends Component {
   constructor(props) {
@@ -58,7 +65,28 @@ class App extends Component {
   }
 
   render() {
-    return <div className="App">{this.renderApp()}</div>;
+    return (
+      <BrowserRouter>
+        <Layout className="layout">
+          <AppHeader />
+          <Content style={{ padding: '0 50px', textAlign: 'center' }}>
+            <div
+              style={{ backgroundColor: '#fff', padding: 24, minHeight: 280 }}
+            >
+              <Routes>
+                <Route path="/" exact element={this.renderApp()} />
+                <Route path="/about" element={<AboutUs />} />
+                <Route
+                  path="/info"
+                  element={<Navigate to="/about" replace />}
+                />
+              </Routes>
+            </div>
+          </Content>
+          <AppFooter />
+        </Layout>
+      </BrowserRouter>
+    );
   }
 }
 
